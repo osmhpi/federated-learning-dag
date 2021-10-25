@@ -1,0 +1,6 @@
+.idea/
+.vscode/
+viewer/tangle_*.json
+experiments/
+/data/
+__pycache__

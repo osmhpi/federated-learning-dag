@@ -1,0 +1,4 @@
+# Ignore generated data and associated metadata
+data
+data-transformed
+meta

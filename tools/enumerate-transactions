@@ -1,0 +1,3 @@
+#! /bin/bash
+
+jq -r .nodes[].name $1 | while read f; do echo transactions/${f}.npy ; done | while read f ; do ls $f ; done
