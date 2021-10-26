@@ -23,7 +23,7 @@ params = {
     'eval_on_fraction': [0.05],
     'clients_per_round': [10],
     'model_data_dir': ['./data/fmnist'],
-    'src_tangle_dir': ['../experiments/femnist-cnn-18/config_0/tangle_data'],         # Set to '' to not use --src-tangle-dir parameter
+    'src_tangle_dir': ['./experiments/<insert pretrain experiment name>/config_0/tangle_data'],         # Set to '' to not use --src-tangle-dir parameter
     'start_round': [100],
     'tip_selector': ['lazy_accuracy'],
     'num_tips': [2],
@@ -44,8 +44,8 @@ params = {
     'particles_depth_start': [10],
     'particles_depth_end': [20],
     'particles_number': [10],
-    'poison_type': ['disabled'],
-    'poison_fraction': [0.2],
+    'poison_type': ['labelflip'],
+    'poison_fraction': [0, 0.2, 0.3],
     'poison_from': [0],
     'poison_use_random_ts': ['False'],
 }

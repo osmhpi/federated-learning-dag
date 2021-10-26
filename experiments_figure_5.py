@@ -16,30 +16,31 @@ from sklearn.model_selection import ParameterGrid
 #############################################################################
 
 params = {
-    'dataset': ['cifar100'],   # is expected to be one value to construct default experiment name
+    'dataset': ['femnistclustered'],   # is expected to be one value to construct default experiment name
     'model': ['cnn'],      # is expected to be one value to construct default experiment name
     'num_rounds': [100],
-    'eval_every': [5],
+    'eval_every': [-1],
     'eval_on_fraction': [0.05],
     'clients_per_round': [10],
-    'model_data_dir': ['./data/cifar100/regular/'],
+    'model_data_dir': ['../data/femnist-data-clustered-alt'],
     'src_tangle_dir': [''],         # Set to '' to not use --src-tangle-dir parameter
     'start_round': [0],
     'tip_selector': ['lazy_accuracy'],
     'num_tips': [2],
     'sample_size': [2],
     'batch_size': [10],
-    'num_batches': [9],
+    'num_batches': [10],
     'publish_if_better_than': ['REFERENCE'], # or parents
     'reference_avg_top': [1],
     'target_accuracy': [1],
-    'learning_rate': [0.01],
-    'num_epochs': [5],
+    'learning_rate': [0.05],
+    'num_epochs': [1],
+    'limit_num_clients_in_dataset': [100],
     'acc_tip_selection_strategy': ['WALK'],
     'acc_cumulate_ratings': ['False'],
     'acc_ratings_to_weights': ['ALPHA'],
     'acc_select_from_weights': ['WEIGHTED_CHOICE'],
-    'acc_alpha': [0.001, 0.01, 0.1, 1, 10, 100, 1000],
+    'acc_alpha': [1, 10, 100],
     'use_particles': ['False'],
     'particles_depth_start': [10],
     'particles_depth_end': [20],
@@ -47,6 +48,7 @@ params = {
     'poison_type': ['disabled'],
     'poison_fraction': [0],
     'poison_from': [0],
+    'poison_use_random_ts': ['False'],
 }
 
 ##############################################################################
@@ -137,6 +139,9 @@ def get_git_hash():
     return git_hash
 
 def run_and_document_experiments(args, experiments_dir, setup_filename, console_output_filename, git_hash):
+
+    shutil.copy(__file__, experiments_dir)
+
     parameter_grid = ParameterGrid(params)
     print(f'Starting experiments for {len(parameter_grid)} parameter combinations...')
     for idx, p in enumerate(parameter_grid):
@@ -159,9 +164,10 @@ def run_and_document_experiments(args, experiments_dir, setup_filename, console_
             '--sample-size %s ' \
             '--batch-size %s ' \
             '--num-batches %s ' \
-            '--publish-if-better-than %s ' \
             '-lr %s ' \
             '--num-epochs %s ' \
+            '--limit-num-clients-in-dataset %s ' \
+            '--publish-if-better-than %s ' \
             '--reference-avg-top %s ' \
             '--tip-selector %s ' \
             '--acc-tip-selection-strategy %s ' \
@@ -176,6 +182,7 @@ def run_and_document_experiments(args, experiments_dir, setup_filename, console_
             '--poison-type %s ' \
             '--poison-fraction %s ' \
             '--poison-from %s ' \
+            '--poison-use-random-ts %s ' \
             ''
         parameters = (
             p['dataset'],
@@ -191,9 +198,10 @@ def run_and_document_experiments(args, experiments_dir, setup_filename, console_
             p['sample_size'],
             p['batch_size'],
             p['num_batches'],
-            p['publish_if_better_than'],
             p['learning_rate'],
             p['num_epochs'],
+            p['limit_num_clients_in_dataset'],
+            p['publish_if_better_than'],
             p['reference_avg_top'],
             p['tip_selector'],
             p['acc_tip_selection_strategy'],
@@ -208,6 +216,7 @@ def run_and_document_experiments(args, experiments_dir, setup_filename, console_
             p['poison_type'],
             p['poison_fraction'],
             p['poison_from'],
+            p['poison_use_random_ts'],
         )
         command = command.strip() % parameters
 
@@ -241,6 +250,7 @@ def run_and_document_experiments(args, experiments_dir, setup_filename, console_
                 command[-1] = str(start)
                 command[8] = str(end)
 
+                print(f"Running {start} to {end}...")
                 training = subprocess.Popen(command, stdout=file, stderr=file)
                 training.wait()
 
