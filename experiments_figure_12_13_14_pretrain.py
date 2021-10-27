@@ -92,7 +92,7 @@ def parse_args():
     return args
 
 def prepare_exp_folder(args):
-    experiments_base = '../experiments'
+    experiments_base = './experiments'
     os.makedirs(experiments_base, exist_ok=True)
 
     if not args.name:
