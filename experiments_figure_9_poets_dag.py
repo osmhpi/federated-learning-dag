@@ -22,7 +22,7 @@ params = {
     'eval_every': [-1],
     'eval_on_fraction': [0.05],
     'clients_per_round': [10],
-    'model_data_dir': ['./data/poets-balanced/data'],
+    'model_data_dir': ['./data/poets-balanced'],
     'src_tangle_dir': [''],         # Set to '' to not use --src-tangle-dir parameter
     'start_round': [0],
     'tip_selector': ['lazy_accuracy'],

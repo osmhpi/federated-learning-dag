@@ -7,7 +7,7 @@ params = {
     'eval_every': 99,
     'eval_on_fraction': 0.05,
     'clients_per_round': 10,
-    'model_data_dir': './data/poets-balanced/data',
+    'model_data_dir': './data/poets-balanced',
     'batch_size': 10,
     'num_batches': 200,
     'learning_rate': 0.8
