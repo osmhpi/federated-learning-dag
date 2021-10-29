@@ -222,7 +222,7 @@ def normalized_cut(graph):
 def parse_args():
     parser = argparse.ArgumentParser(description='Graph analysis of tangle results')
     parser.add_argument('--name',
-                        help='The name of the experiment. Folder name in ../experiments/<name>. Default: <dataset>-<model>-<exp_number>')
+                        help='The name of the experiment. Folder name in ./experiments/<name>. Default: <dataset>-<model>-<exp_number>')
     parser.add_argument('--config',
                         default='0',
                         help='The config ID of the experiment.')
@@ -238,7 +238,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    tx_store = LabTransactionStore(f'../experiments/{args.name}/config_{args.config}/tangle_data')
+    tx_store = LabTransactionStore(f'./experiments/{args.name}/config_{args.config}/tangle_data')
     tangle = tx_store.load_tangle(args.epoch)
 
     cluster_approvals, cluster_rating = compute_within_cluster_approval_fraction(tangle, num_cluster=args.num_cluster)

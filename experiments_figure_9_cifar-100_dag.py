@@ -22,7 +22,7 @@ params = {
     'eval_every': [-1],
     'eval_on_fraction': [0.05],
     'clients_per_round': [10],
-    'model_data_dir': ['../data/cifar100/joined_five_clients/'],
+    'model_data_dir': ['./data/cifar100/joined_five_clients/'],
     'src_tangle_dir': [''],         # Set to '' to not use --src-tangle-dir parameter
     'start_round': [0],
     'tip_selector': ['lazy_accuracy'],
@@ -84,14 +84,14 @@ def exit_if_repo_not_clean():
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Run and document an experiment.')
-    parser.add_argument('--name', help='The name of the experiment. Results will be stored under ../experiments/<name>. Default: <dataset>-<model>-<exp_number>')
+    parser.add_argument('--name', help='The name of the experiment. Results will be stored under ./experiments/<name>. Default: <dataset>-<model>-<exp_number>')
     parser.add_argument('--overwrite_okay', type=bool, default=False, help='Overwrite existing experiment with same name. Default: False')
     args = parser.parse_args()
 
     return args
 
 def prepare_exp_folder(args):
-    experiments_base = '../experiments'
+    experiments_base = './experiments'
     os.makedirs(experiments_base, exist_ok=True)
 
     if not args.name:

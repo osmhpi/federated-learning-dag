@@ -48,7 +48,7 @@ def main():
     print("Loading data... complete")
 
     # Change into result folder within the experiment folder
-    result_path = os.path.join('../experiments', experiment_name, 'config_%s' % config)
+    result_path = os.path.join('./experiments', experiment_name, 'config_%s' % config)
     os.chdir(result_path)
 
     # To execute the step add leaf framework to path
