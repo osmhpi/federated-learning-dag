@@ -4,8 +4,26 @@ This repository contains software artifacts to reproduce the experiments present
 
 ## General Usage
 
-Use pipenv to set up your environment. VS Code users can use the provided devcontainer template as a base environment.
+Since we are still using TensorFlow 1, Python <=3.7 is required.
+ 
+Depending on your setup, you can obtain the old python version using a version manager such as `pyenv` or using a Docker container:
 
+``` bash
+cd federated-learning-dag
+docker run -d --name federated-learning-dag \
+  -v $(PWD):/workspace \
+  --workdir /workspace \
+  --init --shm-size 8g \
+  mcr.microsoft.com/vscode/devcontainers/python:3.7-bullseye \
+    tail -f /dev/null
+docker exec -it federated-learning-dag bash
+# Run pipenv commands in this shell
+
+# Clean up
+docker rm -f federated-learning-dag 
+```
+
+Then, use pipenv to set up your environment. VS Code users can use the provided devcontainer template as a base environment.
 Run `pipenv install` to download the dependencies and run the code within a `pipenv shell`.
 
 There are two execution variants: A default, single-threaded one, and an extended version using the 'ray' parallelism library.
@@ -14,7 +32,7 @@ Basic usage: `python -m tangle.lab --help` (or `python -m tangle.ray --help`).
 
 By default, all `experiments_figure_[*].py` use ray for parallelism.
 This requires lots of main memory and a shared memory option for use within Docker.
-VS Code devcontainer users have to add `"--shm-size", "200gb"` (depending on the available memory) to the `runArgs` in `.devcontainer/devcontainer.json`.
+VS Code devcontainer users have to add `"--shm-size", "8gb"` (depending on the available memory) to the `runArgs` in `.devcontainer/devcontainer.json`.
 
 To view a DAG (sometimes called a tangle) in a web browser, run `python -m http.server` in the repository root and open [http://localhost:8000/viewer/](http://localhost:8000/viewer/). Enter the name of your experiment run and adjust the round slider to see something.
 
