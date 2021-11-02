@@ -11,7 +11,7 @@ Depending on your setup, you can obtain the old python version using a version m
 ``` bash
 cd federated-learning-dag
 docker run -d --name federated-learning-dag \
-  -v $(PWD):/workspace \
+  -v $PWD:/workspace \
   --workdir /workspace \
   --init --shm-size 8g \
   mcr.microsoft.com/vscode/devcontainers/python:3.7-bullseye \
